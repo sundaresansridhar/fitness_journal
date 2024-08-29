@@ -100,23 +100,23 @@ types = dict(
     printable='all_files',
 )
 
-if __name__ == '__main__':
+filename = '6_Daily_Entry.pdf'
+version = 'v1'
+year = 2025
+date_settings = dict(
+    x_values=[1260, 1335, 1435],
+    y_value=345,
+    fontsize=40,
+    color=(0, 0, 0),
+)
+days_settings = dict(
+    x_values=[1075, 1165, 1260, 1350, 1445, 1535, 1630],
+    y_value=455,
+    fontsize=40,
+    color=(0, 0, 0),
+)
 
-    filename = '6_Daily_Entry.pdf'
-    version = 'v1'
-    year = 2025
-    date_settings = dict(
-        x_values=[1260, 1335, 1435],
-        y_value=345,
-        fontsize=40,
-        color=(0, 0, 0),
-    )
-    days_settings = dict(
-        x_values=[1075, 1165, 1260, 1350, 1445, 1535, 1630],
-        y_value=455,
-        fontsize=40,
-        color=(0, 0, 0),
-    )
+if __name__ == '__main__':
 
     ''' paths '''
     current_directory = os.path.abspath(os.path.dirname(__file__))
