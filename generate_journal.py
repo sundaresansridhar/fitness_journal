@@ -50,11 +50,11 @@ def merge_pdfs(filepath_list, output_path, page_to_merge = None):
     
                 # Append the in-memory PDF (first page) to the merger
                 merger.append(temp_pdf)
-                
+            print(f"PDFs {pdf.split('/')[-1]} merged successfully into {output_path}")
                 
         # Write the merged PDF to the specified output path
         merger.write(output_path)
-        print(f"PDFs merged successfully into {output_path}")
+        
     except Exception as e:
         print(f"An error occurred: {e}")
     finally:
@@ -74,7 +74,7 @@ if __name__=='__main__':
         gears_filepath = os.path.join(current_directory, folder_name, "3_Gears and equipments.pdf")
         all_filepaths += [[gears_filepath,None]]
         ''' getting the monthly data'''
-        for imonth in range(1,2):
+        for imonth in range(1,13):
             ''' cover path'''
             month_cover_path = os.path.join(current_directory, 'all_files', "4_month_designs.pdf")
             all_filepaths += [[month_cover_path,imonth-1]]
