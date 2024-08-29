@@ -16,6 +16,7 @@ import os
 from time import strptime
 import numpy as np
 
+
 def plot_pdf(pdf_path: str):
     doc = fitz.open(pdf_path)
 
@@ -94,56 +95,68 @@ def list_dates_of_year(year):
     return all_dates, all_days
 
 
+types = dict(
+    editable='editable_files',
+    printable='all_files',
+)
+
 if __name__ == '__main__':
 
     filename = '6_Daily_Entry.pdf'
     version = 'v1'
     year = 2025
     date_settings = dict(
-        x_values = [1260,1335,1435],
-        y_value = 345,
+        x_values=[1260, 1335, 1435],
+        y_value=345,
         fontsize=40,
         color=(0, 0, 0),
-        )
+    )
     days_settings = dict(
-        x_values = [1075,1165,1260,1350,1445,1535,1630],
-        y_value = 455,
+        x_values=[1075, 1165, 1260, 1350, 1445, 1535, 1630],
+        y_value=455,
         fontsize=40,
         color=(0, 0, 0),
-        )
-    
+    )
+
     ''' paths '''
     current_directory = os.path.abspath(os.path.dirname(__file__))
-    pdf_path_input = os.path.join(current_directory, filename)
     
-    ''' base save directory'''
-    base_directory = os.path.join('/'.join(pdf_path_input.split('/')[:-1]), f'daily_entries_{version}', '')
-    try:
-        os.mkdir(base_directory)
-    except:
-        pass
-
     '''List all dates in 2025'''
-    all_dates, all_days = list_dates_of_year(2025)
-    pdf_path_temp = os.path.join(base_directory, 'entry_temp.pdf')
-    for idate, date in enumerate(all_dates):    
-        print(f'{idate+1}/{len(all_days)} - {date}')
-        day = all_days[idate]
-        
-        ''' duplicating the pdf page'''
-        pdf_path_output = os.path.join(base_directory, f'entry_{date[2]}{str(strptime(date[1],"%b").tm_mon).zfill(2)}{date[0]}.pdf')
-        duplicate_pdf(pdf_path_input,pdf_path_temp)
-        
-        ''' adding the date'''
-        for ielement,date_element in enumerate(date):
-            position = (date_settings['x_values'][ielement],date_settings['y_value'])
-            add_text_to_pdf(pdf_path_temp,pdf_path_output, str(date_element), position,fontsize=date_settings['fontsize'],color=date_settings['color'])
-            duplicate_pdf(pdf_path_output, pdf_path_temp)
-        
-        '''adding the day'''
-        days_order = np.array(['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'])
-        position = (days_settings['x_values'][int(np.where(days_order==day)[0][0])],days_settings['y_value'])
-        add_text_to_pdf(pdf_path_temp,pdf_path_output, 'X', position,fontsize=days_settings['fontsize'],color=days_settings['color'])
-                  
-        ''' removing the temporary pdf'''
-        os.remove(pdf_path_temp)
+    all_dates, all_days = list_dates_of_year(year)
+    
+    for file_type, folder_name in types.items():
+
+        ''' input filepath'''
+        pdf_path_input = os.path.join(current_directory, folder_name, filename)
+
+        ''' base save directory'''
+        base_directory = os.path.join('/'.join(pdf_path_input.split('/')[:-2]), f'daily_entries_{version}_{file_type}', '')
+        try:
+            os.mkdir(base_directory)
+        except:
+            pass
+
+        pdf_path_temp = os.path.join(base_directory, 'entry_temp.pdf')
+        for idate, date in enumerate(all_dates):
+            print(f'{idate+1}/{len(all_days)} - {date}')
+            day = all_days[idate]
+    
+            ''' duplicating the pdf page'''
+            pdf_path_output = os.path.join(base_directory, f'entry_{date[2]}{str(strptime(date[1],"%b").tm_mon).zfill(2)}{date[0]}.pdf')
+            duplicate_pdf(pdf_path_input, pdf_path_temp)
+            print(pdf_path_output)
+    
+            ''' adding the date'''
+            for ielement, date_element in enumerate(date):
+                position = (date_settings['x_values'][ielement], date_settings['y_value'])
+                add_text_to_pdf(pdf_path_temp, pdf_path_output, str(date_element), position,
+                                fontsize=date_settings['fontsize'], color=date_settings['color'])
+                duplicate_pdf(pdf_path_output, pdf_path_temp)
+    
+            '''adding the day'''
+            days_order = np.array(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'])
+            position = (days_settings['x_values'][int(np.where(days_order == day)[0][0])], days_settings['y_value'])
+            add_text_to_pdf(pdf_path_temp, pdf_path_output, 'X', position, fontsize=days_settings['fontsize'], color=days_settings['color'])
+    
+            ''' removing the temporary pdf'''
+            os.remove(pdf_path_temp)
