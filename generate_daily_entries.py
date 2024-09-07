@@ -112,10 +112,7 @@ input_dict = dict(
     ),
 )
 
-foldernames = dict(
-    printable="",
-    editable="editable_",
-)
+foldernames = ['printable','editable']
 
 """ paths """
 base_directory = os.path.abspath(os.path.dirname(__file__))
@@ -126,7 +123,7 @@ filepaths_daily_entry = {
         base_directory,
         f"version_{input_dict['version']}/{filetype}/compressed/6_Daily_Entry.pdf",
     )
-    for filetype, foldername in foldernames.items()
+    for filetype in foldernames
 }
 
 def create_daily_entries():
