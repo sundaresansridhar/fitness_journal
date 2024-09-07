@@ -30,9 +30,9 @@ def get_intro_merging_details():
             )
         ]
 
-    merging_details[folder_type]["page_to_merge"] = [
-        None for i in range(len(merging_details[folder_type]["input_filepaths"]))
-    ]
+        merging_details[folder_type]["page_to_merge"] = [
+            None for i in range(len(merging_details[folder_type]["input_filepaths"]))
+        ]
     return merging_details
 
 
