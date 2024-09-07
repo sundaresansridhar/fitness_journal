@@ -124,7 +124,7 @@ base_directory = os.path.abspath(os.path.dirname(__file__))
 filepaths_daily_entry = {
     filetype: os.path.join(
         base_directory,
-        f"version_{input_dict['version']}/compressed_{foldername}raw_files/6_Daily_Entry.pdf",
+        f"version_{input_dict['version']}/{filetype}/compressed/6_Daily_Entry.pdf",
     )
     for filetype, foldername in foldernames.items()
 }
@@ -132,12 +132,11 @@ filepaths_daily_entry = {
 def create_daily_entries():
     """List all dates in 2025"""
     all_dates, all_days = list_dates_of_year(input_dict["year"])
-
     for filetype, input_filepath in filepaths_daily_entry.items():
         ''' base save directory'''
         base_save_directory = os.path.join(
             base_directory,
-            f"version_{input_dict['version']}/{filetype}_daily_entries",
+            f"version_{input_dict['version']}/{filetype}/daily_entries",
         )
         try:
             os.mkdir(base_save_directory)
