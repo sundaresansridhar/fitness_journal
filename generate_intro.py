@@ -18,15 +18,14 @@ current_directory = os.path.abspath(os.path.dirname(__file__))
 base_directory = os.path.join(current_directory, f"version_{input_dict['version']}", "common")
 
 
-def create_intro():
+def get_intro_merging_details():
     input_filepaths = [
         os.path.join(base_directory, "compressed", filename)
         for filename in ["1_Intro.pdf", "2_vision_board.pdf"]
     ]
-    output_filepath = os.path.join(base_directory, "intro.pdf")
-
-    merge_pdfs(input_filepaths, output_filepath, debug=True)
+    page_to_merge = [None for i in range(len(input_filepaths))]
+    return input_filepaths, page_to_merge
 
 
 if __name__ == "__main__":
-    create_intro()
+    get_intro_merging_details()

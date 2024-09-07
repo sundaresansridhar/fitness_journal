@@ -41,9 +41,8 @@ def get_input_for_merging(folder_type: str, month: int):
 
     input_filepaths = [month_design_filepath] + daily_filepaths + [month_end_filepath]
     page_to_merge = [month] + [None for i in range(len(input_filepaths) - 1)]
-    output_filepath = os.path.join(base_directory, "monthly_entries", reference_text + ".pdf")
 
-    return input_filepaths, page_to_merge, output_filepath
+    return input_filepaths, page_to_merge
 
 
 def get_monthly_merging_details():
@@ -51,7 +50,11 @@ def get_monthly_merging_details():
     for folder_type in foldernames:
         merging_details.setdefault(folder_type, dict(input_filepaths=[], page_to_merge=[]))
         for month in range(1, 13):
-            temp_inputs, temp_pages, __ = get_input_for_merging(folder_type, month)
+            temp_inputs, temp_pages = get_input_for_merging(folder_type, month)
             merging_details[folder_type]["input_filepaths"] += temp_inputs
             merging_details[folder_type]["page_to_merge"] += temp_pages
     return merging_details
+
+
+if __name__ == "__main__":
+    get_monthly_merging_details()
