@@ -40,7 +40,7 @@ def get_input_for_merging(folder_type: str, month: int):
     month_end_filepath = os.path.join(base_directory, "compressed", "5_end_of_month.pdf")
 
     input_filepaths = [month_design_filepath] + daily_filepaths + [month_end_filepath]
-    page_to_merge = [month] + [None for i in range(len(input_filepaths) - 1)]
+    page_to_merge = [month - 1] + [None for i in range(len(input_filepaths) - 1)]
 
     return input_filepaths, page_to_merge
 
